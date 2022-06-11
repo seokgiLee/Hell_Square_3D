@@ -57,6 +57,7 @@
     <Compile Include="Assets\QuarterView 3D Action BE5\ReadMe\Scripts\ReadmeBE5.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\ItemManager.cs" />
+    <Compile Include="Assets\Scripts\Orbit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
