@@ -7,14 +7,17 @@ TagManager:
   - Floor
   - Weapon
   - Item
+  - Melee
+  - Range
+  - Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Bullet
   - 
   - 
   - 
