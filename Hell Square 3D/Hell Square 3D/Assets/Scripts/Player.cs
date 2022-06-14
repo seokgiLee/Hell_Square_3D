@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     bool isDodge;
     bool isFireReady = true;
     bool isReload;
+    bool isBorder;
 
     Vector3 moveVec; // 이동방향
 
@@ -92,13 +93,16 @@ public class Player : MonoBehaviour
             moveVec = Vector3.zero;
         }
 
-        if (wDown) // 걷기
+        if (!isBorder) // 경계에서 멈추기
         {
-            transform.position += moveVec * speed * 0.3f * Time.deltaTime;
-        }
-        else // 달리기
-        {
-            transform.position += moveVec * speed * Time.deltaTime;
+            if (wDown) // 걷기
+            {
+                transform.position += moveVec * speed * 0.3f * Time.deltaTime;
+            }
+            else // 달리기
+            {
+                transform.position += moveVec * speed * Time.deltaTime;
+            }
         }
 
         // 걷기, 달리기 애니메이션
@@ -232,8 +236,11 @@ public class Player : MonoBehaviour
         {
             return;
         }
-
-        if(rDown && !isDodge && !isFireReady)
+        if(rDown)
+        {
+            Debug.Log(isFireReady);
+        }
+        if (rDown && !isDodge && isFireReady)
         {
             anim.SetTrigger("doReload");
             isReload = true;
@@ -248,6 +255,17 @@ public class Player : MonoBehaviour
         equipWeapon.curAmmo += reAmmo;
         ammo -= reAmmo;
         isReload = false;
+    }
+
+    void StopToWall()
+    {
+        Debug.DrawRay(transform.position, transform.forward * 3, Color.green);
+        isBorder = Physics.Raycast(transform.position, moveVec, 3, LayerMask.GetMask("Wall"));
+    }
+
+    void FixedUpdate()
+    {
+        StopToWall();
     }
 
     void OnCollisionEnter(Collision collision) // 바닥착지감지
