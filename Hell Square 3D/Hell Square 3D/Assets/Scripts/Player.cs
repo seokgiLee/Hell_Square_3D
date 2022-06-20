@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public GameObject[] weapons;
     public bool[] hasWeapons;
     public GameObject[] grenades;
+    public GameObject grenadeObject;
     public Camera followCamera;
 
     public int hp;
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
     bool sDown2;
     bool sDown3;
     bool fDown;
+    bool gDown;
     bool rDown;
 
     bool isJump;
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
         Interaction(); // 상호작용
         Swap(); // 무기교체
         Attack(); // 공격
+        Grenade(); // 수류탄
         Reload(); // 재장전
     }
 
@@ -78,7 +81,8 @@ public class Player : MonoBehaviour
         sDown2 = Input.GetButtonDown("Swap2");
         sDown3 = Input.GetButtonDown("Swap3");
         fDown = Input.GetButton("Fire1");
-        rDown= Input.GetButton("Reload");
+        gDown = Input.GetButtonDown("Fire2");
+        rDown = Input.GetButton("Reload");
     }
 
     void Move() // 이동
@@ -118,6 +122,7 @@ public class Player : MonoBehaviour
         // 마우스
         if (fDown)
         {
+            // 바라보는 방향으로 회전
             Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rayHit;
             if (Physics.Raycast(ray, out rayHit, 100))
@@ -230,6 +235,51 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Grenade() // 수류탄
+    {
+        if(grenade<1)
+        {
+            return;
+        }
+
+        if(gDown && !isReload && !isDodge)
+        {
+            // 바라보는 방향으로 던지기
+            Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayHit;
+            if (Physics.Raycast(ray, out rayHit, 100))
+            {
+                Vector3 nextVec = rayHit.point - transform.position;
+                nextVec.y = 10;
+
+                GameObject instantGrenade = Instantiate(grenadeObject, transform.position, transform.rotation);
+                Rigidbody rigidGrenade = instantGrenade.GetComponent<Rigidbody>();
+                rigidGrenade.AddForce(nextVec, ForceMode.Impulse);
+                rigidGrenade.AddTorque(Vector3.back * 10, ForceMode.Impulse);
+
+                grenade--;
+                if (grenade == 3)
+                {
+                    grenades[2].SetActive(false);
+                    grenades[3].SetActive(false);
+                    grenades[4].SetActive(false);
+                    grenades[5].SetActive(true);
+                    grenades[6].SetActive(true);
+                }
+                else if (grenade == 2)
+                {
+                    grenades[2].SetActive(true);
+                    grenades[5].SetActive(false);
+                    grenades[6].SetActive(false);
+                }
+                else
+                {
+                    grenades[grenade + 1].SetActive(false);
+                }
+            }
+        }
+    }
+
     void Reload() // 재장전
     {
         if(equipWeapon == null || equipWeapon.type == Weapon.Type.Melee || ammo == 0)
@@ -306,28 +356,28 @@ public class Player : MonoBehaviour
                     }
                     break;
                 case Item.Type.Grenade:
-                    if (grenade == 2)
-                    {
-                        grenades[1].SetActive(false);
-                        grenades[4].SetActive(true);
-                        grenades[5].SetActive(true);
-                    }
-                    else if (grenade == maxGrenade)
-                    {
-                        grenades[1].SetActive(true);
-                        grenades[2].SetActive(true);
-                        grenades[3].SetActive(true);
-                        grenades[4].SetActive(false);
-                        grenades[5].SetActive(false);
-                    }
-                    else
-                    {
-                        grenades[grenade].SetActive(true);
-                    }
                     grenade += item.value;
                     if (grenade > maxGrenade)
                     {
                         grenade = maxGrenade;
+                    }
+                    if (grenade == 3)
+                    {
+                        grenades[2].SetActive(false);
+                        grenades[5].SetActive(true);
+                        grenades[6].SetActive(true);
+                    }
+                    else if (grenade == maxGrenade)
+                    {
+                        grenades[2].SetActive(true);
+                        grenades[3].SetActive(true);
+                        grenades[4].SetActive(true);
+                        grenades[5].SetActive(false);
+                        grenades[6].SetActive(false);
+                    }
+                    else
+                    {
+                        grenades[grenade].SetActive(true);
                     }
                     break;
             }

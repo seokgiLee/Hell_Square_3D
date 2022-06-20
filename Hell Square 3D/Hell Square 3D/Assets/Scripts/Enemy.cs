@@ -38,7 +38,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator OnDamage(Vector3 reactVec)
+    public void HitByGrenade(Vector3 explosionPosition)
+    {
+        curHp -= 100;
+        Vector3 reactVec = transform.position - explosionPosition;
+        StartCoroutine(OnDamage(reactVec, true));
+    }
+
+    IEnumerator OnDamage(Vector3 reactVec, bool isGrenade = false)
     {
         mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -52,11 +59,22 @@ public class Enemy : MonoBehaviour
         else
         {
             mat.color = Color.gray;
-            gameObject.layer = 11;
+            gameObject.layer = 11; // 다른 물체와 상호작용 X
 
-            reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
-            rigid.AddForce(reactVec * 8, ForceMode.Impulse);
+            if(isGrenade)
+            {
+                reactVec = reactVec.normalized;
+                reactVec += Vector3.up * 3;
+                rigid.freezeRotation = false;
+                rigid.AddForce(reactVec * 8, ForceMode.Impulse);
+                rigid.AddTorque(reactVec * 20, ForceMode.Impulse);
+            }
+            else
+            {
+                reactVec = reactVec.normalized;
+                reactVec += Vector3.up;
+                rigid.AddForce(reactVec * 8, ForceMode.Impulse);
+            }
 
             Destroy(gameObject, 3);
         }
