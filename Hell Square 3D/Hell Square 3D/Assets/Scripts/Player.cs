@@ -39,11 +39,13 @@ public class Player : MonoBehaviour
     bool isFireReady = true;
     bool isReload;
     bool isBorder;
+    bool isDamage;
 
     Vector3 moveVec; // 이동방향
 
     Rigidbody rigid;
     Animator anim;
+    MeshRenderer[] meshs;
 
     GameObject nearObject; // 얻을 아이템
     Weapon equipWeapon; // 장착한 아이템
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+        meshs= GetComponentsInChildren<MeshRenderer>();
     }
 
     void Update()
@@ -332,11 +335,11 @@ public class Player : MonoBehaviour
         if (other.tag == "Item")
         {
             Item item = other.GetComponent<Item>();
-            switch(item.type)
+            switch (item.type)
             {
                 case Item.Type.Heart:
                     hp += item.value;
-                    if(hp>maxHp)
+                    if (hp > maxHp)
                     {
                         hp = maxHp;
                     }
@@ -382,6 +385,30 @@ public class Player : MonoBehaviour
                     break;
             }
             Destroy(other.gameObject);
+        }
+        else if (other.tag == "EnemyAttack")
+        {
+            if (!isDamage)
+            {
+                EnemyAttack enemyAttack = other.GetComponent<EnemyAttack>();
+                hp -= enemyAttack.damage;
+                StartCoroutine(OnDamage());
+            }
+        }
+    }
+
+    IEnumerator OnDamage()
+    {
+        isDamage = true;
+        foreach(MeshRenderer mesh in meshs)
+        {
+            mesh.material.color = Color.red;
+        }
+        yield return new WaitForSeconds(1f);
+        isDamage = false;
+        foreach (MeshRenderer mesh in meshs)
+        {
+            mesh.material.color = Color.white;
         }
     }
 

@@ -323,6 +323,7 @@
 "Assets/Scripts/Bullet.cs"
 "Assets/Scripts/CameraFollow.cs"
 "Assets/Scripts/Enemy.cs"
+"Assets/Scripts/EnemyAttack.cs"
 "Assets/Scripts/Grenade.cs"
 "Assets/Scripts/Item.cs"
 "Assets/Scripts/Orbit.cs"
