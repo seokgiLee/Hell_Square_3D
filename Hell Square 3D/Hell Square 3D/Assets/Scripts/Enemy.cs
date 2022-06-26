@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public int curHp;
     public Transform target;
     public BoxCollider meleeArea;
+    public GameObject enemyBullet;
     public bool isChase;
     public bool isAttack;
 
@@ -73,7 +74,8 @@ public class Enemy : MonoBehaviour
                 break;
 
             case Type.C:
-
+                targetRadius = 0.5f;
+                targetRange = 25f;
                 break;
         }
 
@@ -104,7 +106,7 @@ public class Enemy : MonoBehaviour
             case Type.B:
                 foreach (MeshRenderer mesh in meshs)
                 {
-                    mesh.material.color = Color.yellow;
+                    mesh.material.color = Color.cyan;
                 }
 
                 yield return new WaitForSeconds(0.3f);
@@ -125,14 +127,18 @@ public class Enemy : MonoBehaviour
                 break;
 
             case Type.C:
+                yield return new WaitForSeconds(0.5f);
+                GameObject instantBullet = Instantiate(enemyBullet, transform.position, transform.rotation);
+                Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
+                rigidBullet.velocity = transform.forward * 20;
 
+                yield return new WaitForSeconds(2f);
                 break;
         }
 
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
-
     }
 
     void FreezeVelocity()

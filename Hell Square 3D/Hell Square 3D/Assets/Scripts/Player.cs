@@ -386,12 +386,16 @@ public class Player : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
-        else if (other.tag == "EnemyAttack")
+        else if (other.tag == "EnemyBullet")
         {
             if (!isDamage)
             {
-                EnemyAttack enemyAttack = other.GetComponent<EnemyAttack>();
+                Bullet enemyAttack = other.GetComponent<Bullet>();
                 hp -= enemyAttack.damage;
+                if (other.GetComponent<Rigidbody>() != null)
+                {
+                    Destroy(enemyAttack.gameObject);
+                }
                 StartCoroutine(OnDamage());
             }
         }
