@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    public int speed;
+
     void Update()
     {
-        transform.Rotate(Vector3.right * 30 * Time.deltaTime);
+        transform.Rotate(Vector3.right * speed * Time.deltaTime);
     }
 }

@@ -53,6 +53,7 @@
     <UnityVersion>2021.1.6f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BossBullet.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="Assets\Scripts\Missile.cs" />
     <Compile Include="Assets\Scripts\Grenade.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\BossRock.cs" />
+    <Compile Include="Assets\Scripts\Boss.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

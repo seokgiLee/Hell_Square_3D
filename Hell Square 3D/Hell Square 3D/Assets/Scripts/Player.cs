@@ -388,26 +388,34 @@ public class Player : MonoBehaviour
         }
         else if (other.tag == "EnemyBullet")
         {
+            Bullet enemyAttack = other.GetComponent<Bullet>();
             if (!isDamage)
             {
-                Bullet enemyAttack = other.GetComponent<Bullet>();
                 hp -= enemyAttack.damage;
-                if (other.GetComponent<Rigidbody>() != null)
-                {
-                    Destroy(enemyAttack.gameObject);
-                }
-                StartCoroutine(OnDamage());
+                bool isBoss = enemyAttack.isBoss;
+
+                StartCoroutine(OnDamage(isBoss, other.transform));
+            }
+
+            if (other.GetComponent<Rigidbody>() != null)
+            {
+                Destroy(enemyAttack.gameObject);
             }
         }
     }
 
-    IEnumerator OnDamage()
+    IEnumerator OnDamage(bool isBoss, Transform trans)
     {
         isDamage = true;
         foreach(MeshRenderer mesh in meshs)
         {
             mesh.material.color = Color.red;
         }
+        if(isBoss)
+        {
+            rigid.AddForce((transform.position - trans.position) * 2 + transform.up * 15, ForceMode.Impulse);
+        }
+
         yield return new WaitForSeconds(1f);
         isDamage = false;
         foreach (MeshRenderer mesh in meshs)
