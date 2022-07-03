@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
@@ -34,12 +35,12 @@ public class Player : MonoBehaviour
     bool gDown;
     bool rDown;
 
-    bool isJump;
     bool isDodge;
     bool isFireReady = true;
     bool isReload;
     bool isBorder;
     bool isDamage;
+    bool isShop;
 
     Vector3 moveVec; // 이동방향
 
@@ -64,7 +65,6 @@ public class Player : MonoBehaviour
         GetInput(); // 입력
         Move(); // 이동
         Turn(); // 방향전환
-        Jump(); // 점프
         Dodge(); // 회피
         Interaction(); // 상호작용
         Swap(); // 무기교체
@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
         transform.LookAt(transform.position + moveVec);
 
         // 마우스
-        if (fDown)
+        if (fDown && !isShop)
         {
             // 바라보는 방향으로 회전
             Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
@@ -137,32 +137,32 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Jump() // 점프
-    {
-        if (jDown && !isJump && moveVec == Vector3.zero && !isDodge)
-        {
-            rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            anim.SetBool("isJump", true);
-            anim.SetTrigger("doJump");
-            isJump = true;
-        }
-    }
-
     void Dodge() // 회피
     {
-        if (jDown && !isJump && moveVec != Vector3.zero && !isDodge)
+        if (jDown && !isDodge)
         {
-            speed *= 2;
-            anim.SetTrigger("doDodge");
             isDodge = true;
-
-            Invoke("DodgeEnd", 0.5f);
+            if (moveVec == Vector3.zero && isDodge)
+            {
+                transform.DOLocalMove(transform.position + transform.forward * 10, 1.6f / 3).SetEase(Ease.OutSine);
+                Invoke("DodgeFalse", 0.5f);
+            }
+            else
+            {
+                speed *= 2;
+                Invoke("DodgeEnd", 0.5f);
+            }
+            anim.SetTrigger("doDodge");
         }
     }
 
     void DodgeEnd()
     {
         speed /= 2;
+        DodgeFalse();
+    }
+    void DodgeFalse()
+    {
         isDodge = false;
     }
 
@@ -183,6 +183,12 @@ public class Player : MonoBehaviour
                 equipWeapon = weapons[weaponIndex].GetComponent<Weapon>();
                 weapons[weaponIndex].SetActive(true);
                 Destroy(nearObject);
+            }
+            else if (nearObject.tag == "Shop")
+            {
+                isShop = true;
+                Shop shop = nearObject.GetComponent<Shop>();
+                shop.Enter(this);
             }
         }
     }
@@ -230,7 +236,7 @@ public class Player : MonoBehaviour
         fireDelay += Time.deltaTime;
         isFireReady = equipWeapon.rate < fireDelay;
 
-        if (fDown && isFireReady && !isDodge)
+        if (fDown && isFireReady && !isDodge && !isShop)
         {
             equipWeapon.Use();
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
@@ -240,12 +246,12 @@ public class Player : MonoBehaviour
 
     void Grenade() // 수류탄
     {
-        if(grenade<1)
+        if (grenade < 1)
         {
             return;
         }
 
-        if(gDown && !isReload && !isDodge)
+        if(gDown && !isReload && !isDodge && !isShop)
         {
             // 바라보는 방향으로 던지기
             Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
@@ -289,11 +295,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        if(rDown)
-        {
-            Debug.Log(isFireReady);
-        }
-        if (rDown && !isDodge && isFireReady)
+        if (rDown && !isDodge && isFireReady && !isShop)
         {
             anim.SetTrigger("doReload");
             isReload = true;
@@ -319,15 +321,6 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         StopToWall();
-    }
-
-    void OnCollisionEnter(Collision collision) // 바닥착지감지
-    {
-        if (collision.gameObject.tag == "Floor")
-        {
-            anim.SetBool("isJump", false);
-            isJump = false;
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -426,7 +419,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Weapon")
+        if (other.tag == "Weapon" || other.tag == "Shop")
         {
             nearObject = other.gameObject;
         }
@@ -436,6 +429,16 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Weapon")
         {
+            nearObject = null;
+        }
+        else if (other.tag == "Shop")
+        {
+            isShop = false;
+            if (nearObject != null)
+            {
+                Shop shop = nearObject.GetComponent<Shop>();
+                shop.Exit();
+            }
             nearObject = null;
         }
     }

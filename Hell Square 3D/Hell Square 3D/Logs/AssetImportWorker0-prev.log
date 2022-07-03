@@ -15,11 +15,11 @@ C:/Unity/Hell_Square_3D/Hell Square 3D/Hell Square 3D
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-7807
+8135
 Successfully changed project path to: C:/Unity/Hell_Square_3D/Hell Square 3D/Hell Square 3D
 C:/Unity/Hell_Square_3D/Hell Square 3D/Hell Square 3D
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 113.12 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 152.82 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.6f1 (c0fade0cc7e9)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/2021.1.6f1/Editor/Data/Resources/UnitySubsystems
@@ -35,85 +35,16 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/2021.1.6f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/2021.1.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/2021.1.6f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56876
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56752
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/2021.1.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.008162 seconds.
+Registered in 0.199260 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 107.45 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 81.56 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  8.486 seconds
+- Completed reload, in  9.072 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.018240 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.99 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.497 seconds
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.11 seconds
-Refreshing native plugins compatible for Editor in 0.82 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2714 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 104.1 MB.
-System memory in use after: 104.3 MB.
-
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 3168.
-Total: 3.026500 ms (FindLiveObjects: 0.352600 ms CreateObjectMapping: 0.081000 ms MarkObjects: 2.499000 ms  DeleteObjects: 0.091700 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/QuarterView 3D Action BE5/Sprites/Panel A.png
-  artifactKey: Guid(e56d2c466aae6dc4b96148e5b2431756) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/QuarterView 3D Action BE5/Sprites/Panel A.png using Guid(e56d2c466aae6dc4b96148e5b2431756) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b90fd9f14ece447bf3455e2ce9155a4e') in 0.278549 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3915.151258 seconds.
-  path: Assets/Scenes/SampleScene
-  artifactKey: Guid(ca32fc4ecdf28ee40baee0c11a40ff01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/SampleScene using Guid(ca32fc4ecdf28ee40baee0c11a40ff01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ca472af6814e0b4be166e987819d3ac') in 0.010132 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.012289 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.244 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.09 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2710 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 108.2 MB.
-System memory in use after: 108.4 MB.
-
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 3192.
-Total: 2.611800 ms (FindLiveObjects: 0.274600 ms CreateObjectMapping: 0.075100 ms MarkObjects: 2.185600 ms  DeleteObjects: 0.074900 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 4944.092239 seconds.
-  path: Assets/0. Scenes/SampleScene/NavMesh.asset
-  artifactKey: Guid(44e3329404506554da79a9e1fe4f53df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/0. Scenes/SampleScene/NavMesh.asset using Guid(44e3329404506554da79a9e1fe4f53df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2aa7cecedc1353c72aad96dbca0a6add') in 0.160594 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 20.899013 seconds.
-  path: Assets/5. Font
-  artifactKey: Guid(c6a7737a734680d49b88fc527109e8eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/5. Font using Guid(c6a7737a734680d49b88fc527109e8eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59ef4da06ec0e9926507d155e1ec8a98') in 0.009999 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 22615.563477 seconds.
-  path: Assets/0. Scenes
-  artifactKey: Guid(dee175ac21e832f4290d738e397fb19e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/0. Scenes using Guid(dee175ac21e832f4290d738e397fb19e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ffbd0e7495482985f1973ce5fa1a183c') in 0.010906 seconds 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+Registered in 0.347782 seconds.

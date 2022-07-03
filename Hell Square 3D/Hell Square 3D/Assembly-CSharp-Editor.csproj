@@ -308,6 +308,15 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.5.2\Runtime\VisualScripting.Flow\Dependencies\NCalc\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenUpgradeManager">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\Editor\DOTweenUpgradeManager.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
     </Reference>
@@ -715,6 +724,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{06E9ECBC-C1B1-8ADA-4332-8BBDB5A248A6}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{924A9BBE-A800-5903-FB7C-20F4E3167A21}</Project>
       <Name>Assembly-CSharp</Name>
