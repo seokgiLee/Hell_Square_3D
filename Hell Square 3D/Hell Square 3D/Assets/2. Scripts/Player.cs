@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public GameObject[] grenades;
     public GameObject grenadeObject;
     public Camera followCamera;
+    public GameManager gameManager;
 
     public int hp;
     public int ammo;
@@ -21,6 +22,8 @@ public class Player : MonoBehaviour
     public int maxAmmo;
     public int maxCoin;
     public int maxGrenade;
+
+    public int score;
 
     float hAxis;
     float vAxis;
@@ -41,6 +44,7 @@ public class Player : MonoBehaviour
     bool isBorder;
     bool isDamage;
     bool isShop;
+    bool isDead;
 
     Vector3 moveVec; // 이동방향
 
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
     MeshRenderer[] meshs;
 
     GameObject nearObject; // 얻을 아이템
-    Weapon equipWeapon; // 장착한 아이템
+    public Weapon equipWeapon; // 장착한 아이템
     float fireDelay;
     public float reloadTime;
 
@@ -58,19 +62,24 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         meshs= GetComponentsInChildren<MeshRenderer>();
+
+        PlayerPrefs.SetInt("MaxScore", score);
     }
 
     void Update()
     {
-        GetInput(); // 입력
-        Move(); // 이동
-        Turn(); // 방향전환
-        Dodge(); // 회피
-        Interaction(); // 상호작용
-        Swap(); // 무기교체
-        Attack(); // 공격
-        Grenade(); // 수류탄
-        Reload(); // 재장전
+        if (!isDead)
+        {
+            GetInput(); // 입력
+            Move(); // 이동
+            Turn(); // 방향전환
+            Dodge(); // 회피
+            Interaction(); // 상호작용
+            Swap(); // 무기교체
+            Attack(); // 공격
+            Grenade(); // 수류탄
+            Reload(); // 재장전
+        }
     }
 
     void GetInput() // 입력
@@ -404,9 +413,15 @@ public class Player : MonoBehaviour
         {
             mesh.material.color = Color.red;
         }
+
         if(isBoss)
         {
             rigid.AddForce((transform.position - trans.position) * 2 + transform.up * 15, ForceMode.Impulse);
+        }
+
+        if (hp <= 0 && !isDead)
+        {
+            OnDie();
         }
 
         yield return new WaitForSeconds(1f);
@@ -415,6 +430,14 @@ public class Player : MonoBehaviour
         {
             mesh.material.color = Color.white;
         }
+    }
+
+    void OnDie()
+    {
+        anim.SetTrigger("doDie");
+        isDead = true;
+        gameObject.layer = 13;
+        gameManager.GameOver();
     }
 
     void OnTriggerStay(Collider other)

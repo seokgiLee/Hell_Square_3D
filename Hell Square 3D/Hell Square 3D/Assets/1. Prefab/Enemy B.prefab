@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3417365253437327292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8026018990451581268}
@@ -102,11 +102,22 @@ MonoBehaviour:
   enemyType: 1
   maxHp: 100
   curHp: 0
+  score: 0
   target: {fileID: 0}
   meleeArea: {fileID: 5769977813529766385}
   enemyBullet: {fileID: 0}
+  coins:
+  - {fileID: 4400738761429088871, guid: 6abada88943928e4fbb5d8e19b247792, type: 3}
+  - {fileID: 7976759723715753638, guid: 97f3cdd03466433459f6a83a3a6b5c4e, type: 3}
+  - {fileID: 3768476913041795331, guid: 9f1bd46a5ced0484dbeaf7a140bf6e9c, type: 3}
   isChase: 0
   isAttack: 0
+  isDead: 0
+  rigid: {fileID: 0}
+  boxCollider: {fileID: 0}
+  nav: {fileID: 0}
+  anim: {fileID: 0}
+  meshs: []
 --- !u!1 &5769977813529766390
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +176,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  isBoss: 0
   isMelee: 1
+  isRock: 0
 --- !u!95 &5769977813751721586
 Animator:
   serializedVersion: 3

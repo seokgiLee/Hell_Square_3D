@@ -9,9 +9,12 @@ public class Enemy : MonoBehaviour
     public Type enemyType;
     public int maxHp;
     public int curHp;
+    public int score;
+    public GameManager gameManager;
     public Transform target;
     public BoxCollider meleeArea;
     public GameObject enemyBullet;
+    public GameObject[] coins;
     public bool isChase;
     public bool isAttack;
     public bool isDead;
@@ -39,7 +42,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (nav.enabled && enemyType != Type.Boss)
+        if (nav.enabled && enemyType != Type.Boss && target != null)
         {
             nav.SetDestination(target.position);
             nav.isStopped = !isChase;
@@ -54,12 +57,21 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        Targetting();
-        FreezeVelocity();
+        if (target != null)
+        {
+            Targetting();
+            FreezeVelocity();
+        }
     }
 
     void Targetting()
     {
+        if (target.gameObject.layer == 13)
+        {
+            target = null;
+            anim.SetBool("isWalk", false);
+        }
+
         if (enemyType != Type.Boss && !isDead)
         {
             float targetRadius = 0;
@@ -83,7 +95,7 @@ public class Enemy : MonoBehaviour
                     break;
             }
 
-            RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
+            RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, targetRadius, transform.forward * 0.5f, targetRange, LayerMask.GetMask("Player"));
 
             if (rayHits.Length > 0 && !isAttack)
             {
@@ -104,7 +116,7 @@ public class Enemy : MonoBehaviour
                 yield return new WaitForSeconds(0.3f);
                 meleeArea.enabled = true;
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.2f);
                 meleeArea.enabled = false;
                 break;
 
@@ -209,6 +221,41 @@ public class Enemy : MonoBehaviour
             isChase = false;
             nav.enabled = false;
             anim.SetTrigger("doDie");
+            Player player = target.GetComponent<Player>();
+            player.score += score;
+
+            switch(enemyType)
+            {
+                case Type.A:
+                    for (int i = 0; i < Random.Range(1, 3); i++)
+                    {
+                        Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        gameManager.enemyCntA--;
+                    }
+                    break;
+                case Type.B:
+                    for (int i = 0; i < Random.Range(3, 6); i++)
+                    {
+                        Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        gameManager.enemyCntB--;
+                    }
+                    break;
+                case Type.C:
+                    Instantiate(coins[1], transform.position, Quaternion.identity);
+                    for (int i = 0; i < Random.Range(3, 6); i++)
+                    {
+                        Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        gameManager.enemyCntC--;
+                    }
+                    break;
+                case Type.Boss:
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Instantiate(coins[2], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        gameManager.enemyCntBoss--;
+                    }
+                    break;
+            }
 
             if(isGrenade)
             {
@@ -224,11 +271,8 @@ public class Enemy : MonoBehaviour
                 reactVec += Vector3.up;
                 rigid.AddForce(reactVec * 8, ForceMode.Impulse);
             }
-
-            if (enemyType != Type.Boss)
-            {
-                Destroy(gameObject, 3);
-            }
+            
+            Destroy(gameObject, 3);            
         }
     }
 }
