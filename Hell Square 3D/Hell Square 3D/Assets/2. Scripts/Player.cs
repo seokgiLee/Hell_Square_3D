@@ -14,6 +14,16 @@ public class Player : MonoBehaviour
     public Camera followCamera;
     public GameManager gameManager;
 
+    public AudioSource walkSound;
+    public AudioSource dodgeSound;
+    public AudioSource swapSound;
+    public AudioSource throwSound;
+    public AudioSource coinSound;
+    public AudioSource weaponSound;
+    public AudioSource itemSound;
+    public AudioSource hitSound;
+    public AudioSource dieSound;
+
     public int hp;
     public int ammo;
     public int coin;
@@ -114,11 +124,22 @@ public class Player : MonoBehaviour
             if (wDown) // 걷기
             {
                 transform.position += moveVec * speed * 0.3f * Time.deltaTime;
+                walkSound.Play();
             }
             else // 달리기
             {
                 transform.position += moveVec * speed * Time.deltaTime;
+                walkSound.Play();
             }
+        }
+        else
+        {
+            walkSound.Stop();
+        }
+
+        if(moveVec == Vector3.zero)
+        {
+            walkSound.Stop();
         }
 
         // 걷기, 달리기 애니메이션
@@ -162,6 +183,7 @@ public class Player : MonoBehaviour
                 Invoke("DodgeEnd", 0.5f);
             }
             anim.SetTrigger("doDodge");
+            dodgeSound.Play();
         }
     }
 
@@ -183,14 +205,26 @@ public class Player : MonoBehaviour
             {
                 Item item = nearObject.GetComponent<Item>();
                 int weaponIndex = item.value;
-                hasWeapons[weaponIndex] = true;
 
-                if (equipWeapon != null)
+                if (hasWeapons[weaponIndex])
                 {
-                    equipWeapon.gameObject.SetActive(false);
+                    ammo += 30;
+                    if (ammo > maxAmmo)
+                    {
+                        ammo = maxAmmo;
+                    }
                 }
-                equipWeapon = weapons[weaponIndex].GetComponent<Weapon>();
-                weapons[weaponIndex].SetActive(true);
+                else
+                {
+                    hasWeapons[weaponIndex] = true;
+                    if (equipWeapon != null)
+                    {
+                        equipWeapon.gameObject.SetActive(false);
+                    }
+                    equipWeapon = weapons[weaponIndex].GetComponent<Weapon>();
+                    weapons[weaponIndex].SetActive(true);
+                }
+                weaponSound.Play();
                 Destroy(nearObject);
             }
             else if (nearObject.tag == "Shop")
@@ -232,6 +266,7 @@ public class Player : MonoBehaviour
             }
             equipWeapon = weapons[weaponIndex].GetComponent<Weapon>();
             weapons[weaponIndex].SetActive(true);
+            swapSound.Play();
         }
     }
 
@@ -295,6 +330,7 @@ public class Player : MonoBehaviour
                     grenades[grenade + 1].SetActive(false);
                 }
             }
+            throwSound.Play();
         }
     }
 
@@ -345,6 +381,7 @@ public class Player : MonoBehaviour
                     {
                         hp = maxHp;
                     }
+                    itemSound.Play();
                     break;
                 case Item.Type.Ammo:
                     ammo += item.value;
@@ -352,6 +389,7 @@ public class Player : MonoBehaviour
                     {
                         ammo = maxAmmo;
                     }
+                    itemSound.Play();
                     break;
                 case Item.Type.Coin:
                     coin += item.value;
@@ -359,6 +397,7 @@ public class Player : MonoBehaviour
                     {
                         coin = maxCoin;
                     }
+                    coinSound.Play();
                     break;
                 case Item.Type.Grenade:
                     grenade += item.value;
@@ -384,6 +423,7 @@ public class Player : MonoBehaviour
                     {
                         grenades[grenade].SetActive(true);
                     }
+                    itemSound.Play();
                     break;
             }
             Destroy(other.gameObject);
@@ -421,7 +461,12 @@ public class Player : MonoBehaviour
 
         if (hp <= 0 && !isDead)
         {
+            dieSound.Play();
             OnDie();
+        }
+        else
+        {
+            hitSound.Play();
         }
 
         yield return new WaitForSeconds(1f);

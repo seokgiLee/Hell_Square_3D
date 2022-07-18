@@ -50,6 +50,12 @@ public class GameManager : MonoBehaviour
     public RectTransform bossHPGroup;
     public RectTransform bossHPBar;
 
+    public AudioSource startSound;
+    public AudioSource endSound;
+    public AudioSource clickSound;
+    public AudioSource enterSound;
+    public AudioSource exitSound;
+
     void Awake()
     {
         enemyList = new List<int>();

@@ -7,6 +7,7 @@ public class Grenade : MonoBehaviour
     public GameObject meshObject;
     public GameObject effectObject;
     public Rigidbody rigid;
+    public AudioSource explosionAudio;
 
     // Start is called before the first frame update
     void Awake()
@@ -28,7 +29,7 @@ public class Grenade : MonoBehaviour
         {
             hitObject.transform.GetComponent<Enemy>().HitByGrenade(transform.position);
         }
-
+        explosionAudio.Play();
         Destroy(gameObject, 5);
     }
 }
