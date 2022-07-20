@@ -29,6 +29,7 @@ public class Grenade : MonoBehaviour
         {
             hitObject.transform.GetComponent<Enemy>().HitByGrenade(transform.position);
         }
+
         explosionAudio.Play();
         Destroy(gameObject, 5);
     }

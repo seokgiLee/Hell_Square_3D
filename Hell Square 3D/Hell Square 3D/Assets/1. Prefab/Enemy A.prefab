@@ -40,7 +40,7 @@ AudioSource:
   m_GameObject: {fileID: 512752715426973315}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7316123600385153537, guid: 6eab195226e553a4ab4609099f56b9b0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 881e3f52c86c94f26a60718d35627cd8, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -186,7 +186,7 @@ AudioSource:
   m_GameObject: {fileID: 3065700394686231756}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7316123600385153537, guid: 6eab195226e553a4ab4609099f56b9b0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -313,7 +313,7 @@ AudioSource:
   m_GameObject: {fileID: 3806098787734968702}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7316123600385153537, guid: 6eab195226e553a4ab4609099f56b9b0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -583,6 +583,9 @@ MonoBehaviour:
   nav: {fileID: 0}
   anim: {fileID: 0}
   meshs: []
+  attackSound: {fileID: 8782272310247556998}
+  hitSound: {fileID: 7842279677464562716}
+  dieSound: {fileID: 542983770945347312}
 --- !u!1001 &1798876387593624070
 PrefabInstance:
   m_ObjectHideFlags: 0

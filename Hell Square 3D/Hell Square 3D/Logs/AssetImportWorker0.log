@@ -15,11 +15,11 @@ C:/Unity/Hell_Square_3D/Hell Square 3D/Hell Square 3D
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-7218
+11557
 Successfully changed project path to: C:/Unity/Hell_Square_3D/Hell Square 3D/Hell Square 3D
 C:/Unity/Hell_Square_3D/Hell Square 3D/Hell Square 3D
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 90.58 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 163.12 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.6f1 (c0fade0cc7e9)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/2021.1.6f1/Editor/Data/Resources/UnitySubsystems
@@ -35,67 +35,16 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/2021.1.6f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/2021.1.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/2021.1.6f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56800
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56584
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/2021.1.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.006120 seconds.
+Registered in 0.004289 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 82.98 ms, found 1 plugins.
+Refreshing native plugins compatible for Editor in 84.05 ms, found 1 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  9.180 seconds
+- Completed reload, in  7.749 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.017330 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.68 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.284 seconds
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.09 seconds
-Refreshing native plugins compatible for Editor in 0.87 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2738 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 104.9 MB.
-System memory in use after: 105.1 MB.
-
-Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3195.
-Total: 4.206000 ms (FindLiveObjects: 0.892100 ms CreateObjectMapping: 0.336100 ms MarkObjects: 2.864400 ms  DeleteObjects: 0.111100 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/1. Prefab/Throw Grenade.prefab
-  artifactKey: Guid(7b097f57647af134283e1cac6b07da11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/1. Prefab/Throw Grenade.prefab using Guid(7b097f57647af134283e1cac6b07da11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0bd7ba1dfbafd07c891e2ef27e0dfd9e') in 0.223791 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.011078 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.73 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.253 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.60 ms, found 1 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2733 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 108.6 MB.
-System memory in use after: 108.8 MB.
-
-Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 3205.
-Total: 2.344200 ms (FindLiveObjects: 0.264000 ms CreateObjectMapping: 0.077600 ms MarkObjects: 1.942400 ms  DeleteObjects: 0.058900 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 20.052292 seconds.
-  path: Assets/1. Prefab/Throw Grenade.prefab
-  artifactKey: Guid(7b097f57647af134283e1cac6b07da11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/1. Prefab/Throw Grenade.prefab using Guid(7b097f57647af134283e1cac6b07da11) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63277861aee182daca92ea1f17972747') in 0.079351 seconds 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+Registered in 0.006688 seconds.

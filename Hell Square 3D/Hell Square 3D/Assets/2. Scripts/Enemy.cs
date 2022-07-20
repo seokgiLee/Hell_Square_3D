@@ -25,6 +25,10 @@ public class Enemy : MonoBehaviour
     public Animator anim;
     public MeshRenderer[] meshs;
 
+    public AudioSource attackSound;
+    public AudioSource hitSound;
+    public AudioSource dieSound;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -115,6 +119,7 @@ public class Enemy : MonoBehaviour
             case Type.A:
                 yield return new WaitForSeconds(0.3f);
                 meleeArea.enabled = true;
+                attackSound.Play();
 
                 yield return new WaitForSeconds(0.2f);
                 meleeArea.enabled = false;
@@ -130,6 +135,7 @@ public class Enemy : MonoBehaviour
                 rigid.AddForce(transform.forward * 30, ForceMode.Impulse);
                 meleeArea.enabled = true;
                 gameObject.layer = 11;
+                attackSound.Play();
 
                 yield return new WaitForSeconds(0.5f);
                 rigid.velocity = Vector3.zero;
@@ -148,6 +154,7 @@ public class Enemy : MonoBehaviour
                 GameObject instantBullet = Instantiate(enemyBullet, transform.position, transform.rotation);
                 Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
                 rigidBullet.velocity = transform.forward * 20;
+                attackSound.Play();
 
                 yield return new WaitForSeconds(2f);
                 break;
@@ -209,6 +216,7 @@ public class Enemy : MonoBehaviour
             }
             reactVec = reactVec.normalized;
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
+            hitSound.Play();
         }
         else
         {
@@ -223,37 +231,38 @@ public class Enemy : MonoBehaviour
             anim.SetTrigger("doDie");
             Player player = target.GetComponent<Player>();
             player.score += score;
+            dieSound.Play();
 
-            switch(enemyType)
+            switch (enemyType)
             {
                 case Type.A:
                     for (int i = 0; i < Random.Range(1, 3); i++)
                     {
                         Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                        gameManager.enemyCntA--;
                     }
+                    gameManager.enemyCntA--;
                     break;
                 case Type.B:
                     for (int i = 0; i < Random.Range(3, 6); i++)
                     {
                         Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                        gameManager.enemyCntB--;
                     }
+                    gameManager.enemyCntB--;
                     break;
                 case Type.C:
                     Instantiate(coins[1], transform.position, Quaternion.identity);
                     for (int i = 0; i < Random.Range(3, 6); i++)
                     {
                         Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                        gameManager.enemyCntC--;
                     }
+                    gameManager.enemyCntC--;
                     break;
                 case Type.Boss:
                     for (int i = 0; i < 10; i++)
                     {
                         Instantiate(coins[2], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                        gameManager.enemyCntBoss--;
                     }
+                    gameManager.enemyCntBoss--;
                     break;
             }
 

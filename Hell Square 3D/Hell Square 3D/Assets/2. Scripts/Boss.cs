@@ -12,6 +12,10 @@ public class Boss : Enemy
     Vector3 tauntVec; // 내려찍기
     public bool isLook; // 플레이어 바라보기
 
+    public AudioSource rockSound;
+    public AudioSource jumpSound;
+    public AudioSource landSound;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -75,11 +79,13 @@ public class Boss : Enemy
         GameObject instantMissileA = Instantiate(missile, missilePortA.position, missilePortA.rotation);
         BossBullet bossMissileA = instantMissileA.GetComponent<BossBullet>();
         bossMissileA.target = target;
+        attackSound.Play();
 
         yield return new WaitForSeconds(0.5f);
         GameObject instantMissileB = Instantiate(missile, missilePortB.position, missilePortB.rotation);
         BossBullet bossMissileB = instantMissileB.GetComponent<BossBullet>();
         bossMissileB.target = target;
+        attackSound.Play();
 
         yield return new WaitForSeconds(2f);
 
@@ -91,6 +97,7 @@ public class Boss : Enemy
         isLook = false;
         anim.SetTrigger("doBigShot");
         Instantiate(enemyBullet, transform.position, transform.rotation);
+        rockSound.Play();
 
         yield return new WaitForSeconds(3f);
 
@@ -105,9 +112,11 @@ public class Boss : Enemy
         nav.isStopped = false;
         boxCollider.enabled = false;
         anim.SetTrigger("doTaunt");
+        jumpSound.Play();
 
         yield return new WaitForSeconds(1.5f);
         meleeArea.enabled = true;
+        landSound.Play();
 
         yield return new WaitForSeconds(0.5f);
         meleeArea.enabled = false;

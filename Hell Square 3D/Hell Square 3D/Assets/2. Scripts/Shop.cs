@@ -17,6 +17,11 @@ public class Shop : MonoBehaviour
     Player enterPlayer;
     bool isShop;
 
+    public AudioSource clickSound;
+    public AudioSource errorSound;
+    public AudioSource enterSound;
+    public AudioSource exitSound;
+
     public void Enter(Player player)
     {
         if (!isShop)
@@ -25,6 +30,7 @@ public class Shop : MonoBehaviour
             anim.SetTrigger("doHello");
             enterPlayer = player;
             uiGroup.anchoredPosition = Vector3.zero;
+            enterSound.Play();
         }
     }
 
@@ -35,6 +41,7 @@ public class Shop : MonoBehaviour
             isShop = false;
             anim.SetTrigger("doHello");
             uiGroup.anchoredPosition = Vector3.down * 1000;
+            exitSound.Play();
         }
     }
 
@@ -49,6 +56,7 @@ public class Shop : MonoBehaviour
             return;
         }
         enterPlayer.coin -= pirce;
+        clickSound.Play();
 
         Vector3 ranVec = Vector3.right * Random.Range(-3, 3) + Vector3.forward * Random.Range(-3, 3);
         Instantiate(item[index], itemPos[index].position + ranVec, itemPos[index].rotation);

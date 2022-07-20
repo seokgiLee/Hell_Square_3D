@@ -52,9 +52,7 @@ public class GameManager : MonoBehaviour
 
     public AudioSource startSound;
     public AudioSource endSound;
-    public AudioSource clickSound;
-    public AudioSource enterSound;
-    public AudioSource exitSound;
+    public AudioSource gameoverSound;
 
     void Awake()
     {
@@ -102,6 +100,7 @@ public class GameManager : MonoBehaviour
             zone.gameObject.SetActive(true);
         }
 
+        startSound.Play();
         isBattle = true;
         StartCoroutine(InBattle());
     }
@@ -117,6 +116,7 @@ public class GameManager : MonoBehaviour
             zone.gameObject.SetActive(false);
         }
 
+        endSound.Play();
         isBattle = false;
         stage++;
     }

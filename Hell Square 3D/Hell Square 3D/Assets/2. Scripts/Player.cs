@@ -121,30 +121,21 @@ public class Player : MonoBehaviour
 
         if (!isBorder) // 경계에서 멈추기
         {
-            if (wDown) // 걷기
-            {
-                transform.position += moveVec * speed * 0.3f * Time.deltaTime;
-                walkSound.Play();
-            }
-            else // 달리기
-            {
-                transform.position += moveVec * speed * Time.deltaTime;
-                walkSound.Play();
-            }
-        }
-        else
-        {
-            walkSound.Stop();
-        }
-
-        if(moveVec == Vector3.zero)
-        {
-            walkSound.Stop();
+            // 달리기
+            transform.position += moveVec * speed * Time.deltaTime;
         }
 
         // 걷기, 달리기 애니메이션
         anim.SetBool("isRun", moveVec != Vector3.zero);
-        anim.SetBool("isWalk", wDown);
+        if (!walkSound.isPlaying && !isDodge)
+        {
+            walkSound.Play();
+        }
+
+        if (moveVec == Vector3.zero)
+        {
+            walkSound.Stop();
+        }
     }
 
     void Turn() // 방향전환
