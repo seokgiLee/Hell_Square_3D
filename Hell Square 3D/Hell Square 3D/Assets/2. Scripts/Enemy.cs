@@ -225,6 +225,43 @@ public class Enemy : MonoBehaviour
                 mesh.material.color = Color.gray;
             }
             gameObject.layer = 11; // 다른 물체와 상호작용 X
+
+            if (!isDead)
+            {
+                switch (enemyType)
+                {
+                    case Type.A:
+                        for (int i = 0; i < Random.Range(1, 3); i++)
+                        {
+                            Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        }
+                        gameManager.enemyCntA--;
+                        break;
+                    case Type.B:
+                        for (int i = 0; i < Random.Range(3, 6); i++)
+                        {
+                            Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        }
+                        gameManager.enemyCntB--;
+                        break;
+                    case Type.C:
+                        Instantiate(coins[1], transform.position, Quaternion.identity);
+                        for (int i = 0; i < Random.Range(3, 6); i++)
+                        {
+                            Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        }
+                        gameManager.enemyCntC--;
+                        break;
+                    case Type.Boss:
+                        for (int i = 0; i < 10; i++)
+                        {
+                            Instantiate(coins[2], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
+                        }
+                        gameManager.enemyCntBoss--;
+                        break;
+                }
+            }
+
             isDead = true;
             isChase = false;
             nav.enabled = false;
@@ -232,39 +269,6 @@ public class Enemy : MonoBehaviour
             Player player = target.GetComponent<Player>();
             player.score += score;
             dieSound.Play();
-
-            switch (enemyType)
-            {
-                case Type.A:
-                    for (int i = 0; i < Random.Range(1, 3); i++)
-                    {
-                        Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                    }
-                    gameManager.enemyCntA--;
-                    break;
-                case Type.B:
-                    for (int i = 0; i < Random.Range(3, 6); i++)
-                    {
-                        Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                    }
-                    gameManager.enemyCntB--;
-                    break;
-                case Type.C:
-                    Instantiate(coins[1], transform.position, Quaternion.identity);
-                    for (int i = 0; i < Random.Range(3, 6); i++)
-                    {
-                        Instantiate(coins[0], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                    }
-                    gameManager.enemyCntC--;
-                    break;
-                case Type.Boss:
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Instantiate(coins[2], transform.position + new Vector3(Random.Range(0, 3), 0, Random.Range(0, 3)), Quaternion.identity);
-                    }
-                    gameManager.enemyCntBoss--;
-                    break;
-            }
 
             if(isGrenade)
             {

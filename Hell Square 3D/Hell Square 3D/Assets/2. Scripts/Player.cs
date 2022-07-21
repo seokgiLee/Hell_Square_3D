@@ -88,7 +88,10 @@ public class Player : MonoBehaviour
             Swap(); // 무기교체
             Attack(); // 공격
             Grenade(); // 수류탄
-            Reload(); // 재장전
+            if (rDown)
+            {
+                Reload(); // 재장전
+            }
         }
     }
 
@@ -249,7 +252,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (sDown1 || sDown2 || sDown3)
+        if ((sDown1 || sDown2 || sDown3) && !isReload)
         {
             if (equipWeapon != null)
             {
@@ -268,10 +271,16 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if(equipWeapon.curAmmo == 0)
+        {
+            Reload();
+            return;
+        }
+
         fireDelay += Time.deltaTime;
         isFireReady = equipWeapon.rate < fireDelay;
 
-        if (fDown && isFireReady && !isDodge && !isShop)
+        if (fDown && isFireReady && !isDodge && !isShop && !isReload)
         {
             equipWeapon.Use();
             anim.SetTrigger(equipWeapon.type == Weapon.Type.Melee ? "doSwing" : "doShot");
@@ -331,7 +340,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        if (rDown && !isDodge && isFireReady && !isShop)
+        if (!isDodge && isFireReady && !isShop && !isReload)
         {
             anim.SetTrigger("doReload");
             isReload = true;

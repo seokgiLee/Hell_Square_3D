@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 1
-  maxHp: 100
+  maxHp: 30
   curHp: 0
   score: 0
   gameManager: {fileID: 0}
