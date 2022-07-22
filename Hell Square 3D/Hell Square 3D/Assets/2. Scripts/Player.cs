@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     float hAxis;
     float vAxis;
 
-    bool wDown;
+    public bool pause;
     bool jDown;
     bool iDown;
     bool sDown1;
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (!isDead)
+        if (!isDead && !pause)
         {
             GetInput(); // 입력
             Move(); // 이동
@@ -99,7 +99,6 @@ public class Player : MonoBehaviour
     {
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
-        wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
         iDown = Input.GetButtonDown("Interaction");
         sDown1 = Input.GetButtonDown("Swap1");

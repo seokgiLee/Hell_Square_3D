@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public GameObject gamePanel;
     public GameObject menuPanel;
     public GameObject overPanel;
+    public GameObject pausePanel;
+    public GameObject optionPanel;
     public Text maxScoreText;
 
     public Text scoreText;
@@ -180,6 +182,41 @@ public class GameManager : MonoBehaviour
         {
             playTime += Time.deltaTime;
         }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (optionPanel.activeSelf)
+            {
+                Option(false);
+            }
+            else if (pausePanel.activeSelf)
+            {
+                Pause(false);
+            }
+            else
+            {
+                Pause(true);
+            }
+        }
+    }
+
+    public void Pause(bool pause)
+    {
+        pausePanel.SetActive(pause);
+        if (pause)
+        {
+            Time.timeScale = 0;
+            player.pause = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            player.pause = false;
+        }
+    }
+    public void Option(bool option)
+    {
+        optionPanel.SetActive(option);
     }
 
     void LateUpdate()
