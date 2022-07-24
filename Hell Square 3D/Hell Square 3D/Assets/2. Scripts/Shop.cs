@@ -22,6 +22,8 @@ public class Shop : MonoBehaviour
     public AudioSource enterSound;
     public AudioSource exitSound;
 
+    public Button[] weaponBuyButtons;
+
     public void Enter(Player player)
     {
         if (!isShop)
@@ -60,6 +62,8 @@ public class Shop : MonoBehaviour
 
         Vector3 ranVec = Vector3.right * Random.Range(-3, 3) + Vector3.forward * Random.Range(-3, 3);
         Instantiate(item[index], itemPos[index].position + ranVec, itemPos[index].rotation);
+
+        weaponBuyButtons[index].interactable = false;
     }
 
     IEnumerator Talk()

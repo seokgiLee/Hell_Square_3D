@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -55,11 +56,35 @@ public class GameManager : MonoBehaviour
     public AudioSource startSound;
     public AudioSource endSound;
     public AudioSource gameoverSound;
+    public AudioSource clickSound;
+
+    public AudioMixer audioMixer;
+    public Slider audioSlider;
+    public Slider bgmSlider;
+    public Slider sfxSlider;
+
+    float master;
+    float bgm;
+    float sfx;
 
     void Awake()
     {
         enemyList = new List<int>();
         maxScoreText.text = string.Format("{0:n0}", PlayerPrefs.GetInt("MaxScore"));
+        if (!PlayerPrefs.HasKey("MaxScore"))
+        {
+            sfx = bgm = master = -20;
+            PlayerPrefs.SetFloat("Master", -20);
+            PlayerPrefs.SetFloat("BGM", -20);
+            PlayerPrefs.SetFloat("SFX", -20);
+        }
+
+        master = PlayerPrefs.GetFloat("Master");
+        bgm = PlayerPrefs.GetFloat("BGM");
+        sfx = PlayerPrefs.GetFloat("SFX");
+        audioSlider.value = master;
+        bgmSlider.value = bgm;
+        sfxSlider.value = sfx;
     }
 
     public void GameStart()
@@ -70,10 +95,17 @@ public class GameManager : MonoBehaviour
         gamePanel.SetActive(true);
         player.gameObject.SetActive(true);
         nextStageZone.SetActive(true);
+        audioMixer.SetFloat("Master", master);
+        audioMixer.SetFloat("BGM", bgm);
+        audioMixer.SetFloat("SFX", sfx);
+
+        startSound.Play();
     }
 
     public void GameOver()
     {
+        gameoverSound.Play();
+
         gamePanel.SetActive(false);
         overPanel.SetActive(true);
         curScoreText.text = scoreText.text;
@@ -202,6 +234,7 @@ public class GameManager : MonoBehaviour
 
     public void Pause(bool pause)
     {
+        clickSound.Play();
         pausePanel.SetActive(pause);
         if (pause)
         {
@@ -216,7 +249,41 @@ public class GameManager : MonoBehaviour
     }
     public void Option(bool option)
     {
+        clickSound.Play();
         optionPanel.SetActive(option);
+    }
+    public void MasterAudioControl() // 마스터 볼륨조절
+    {
+        float master = audioSlider.value;
+
+        if (master == -40)
+        {
+            master = -80;
+        }
+        audioMixer.SetFloat("Master", master);
+        PlayerPrefs.SetFloat("Master", master);
+    }
+    public void BGMAudioControl() // BGM 볼륨조절
+    {
+        float bgm = bgmSlider.value;
+
+        if (bgm == -40)
+        {
+            bgm = -80;
+        }
+        audioMixer.SetFloat("BGM", bgm);
+        PlayerPrefs.SetFloat("BGM", bgm);
+    }
+    public void SFXAudioControl() // 효과음 볼륨조절
+    {
+        float sfx = sfxSlider.value;
+
+        if (sfx == -40)
+        {
+            sfx = -80;
+        }
+        audioMixer.SetFloat("SFX", sfx);
+        PlayerPrefs.SetFloat("SFX", sfx);
     }
 
     void LateUpdate()
